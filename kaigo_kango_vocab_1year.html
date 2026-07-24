@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ခိုင်းဂေါ့ မေးခွန်းနမူနာ (၁ နှစ်)｜ဝေါဟာရဇယား</title>
+<style>
+:root {
+  --border: #e5e7eb;
+  --bg: #ffffff;
+  --bg2: #f8fafc;
+  --text: #0f172a;
+  --muted: #475569;
+  --btn: #111827;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Myanmar", "Noto Sans JP", Arial, sans-serif;
+  color:var(--text);
+  background:var(--bg2);
+  line-height:1.6;
+  font-size:16px;
+}
+.container{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px;
+}
+header{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+h1{
+  margin:0 0 8px 0;
+  font-size: 18px;
+  line-height: 1.35;
+}
+p{
+  margin: 6px 0 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top: 12px;
+}
+input[type="search"]{
+  flex: 1 1 260px;
+  padding: 12px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 16px;
+  background: #fff;
+}
+.smallbtn{
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 14px;
+  color: var(--btn);
+}
+.tablewrap{
+  margin-top: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+table{width:100%; border-collapse: collapse;}
+thead th{
+  text-align:left;
+  font-size: 13px;
+  color: var(--muted);
+  background: #fff;
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+tbody td{
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+tbody tr:last-child td{border-bottom:none}
+.jpbtn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 16px;
+  color: var(--btn);
+  cursor: pointer;
+  max-width: 100%;
+  text-align: left;
+}
+.jpbtn:active{transform: scale(.99)}
+.jpbtn::after{content: "🔊"; font-size: 16px;}
+.count{margin-left:auto; color: var(--muted); font-size: 13px;}
+.audioBar{margin-top: 10px; display:flex; gap:10px; align-items:center; flex-wrap: wrap;}
+audio{width: min(520px, 100%);}
+.badge{display:inline-flex; align-items:center; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); background:#fff; color: var(--muted); font-size: 12px;}
+@media (max-width: 520px){
+  body{font-size:16px}
+  h1{font-size:17px}
+  tbody td{padding: 10px}
+  .jpbtn{width: 100%; justify-content: space-between;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>ခိုင်းဂေါ့ မေးခွန်းနမူနာ (၁ နှစ်)｜ဝေါဟာရဇယား</h1>
+    <p>ဂျပန်စာကိုနှိပ်လိုက်ရင် အသံထွက်နားထောင်နိုင်ပါတယ်။ (Google Translate TTS သုံးထားသည်)</p>
+    <div class="controls">
+      <input id="q" type="search" placeholder="ရှာရန် (ဥပမာ: 介護 / かいご / စောင့်ရှောက်)" autocomplete="off">
+      <button id="clear" class="smallbtn" type="button">ရှင်းမယ်</button>
+      <span id="count" class="count"></span>
+    </div>
+    <div class="audioBar">
+      <span class="badge">🔊 အသံ</span>
+      <audio id="player" controls preload="none"></audio>
+    </div>
+  </header>
+
+  <div class="tablewrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th style="width:34%">ဂျပန် (漢字/カタカナ)</th>
+          <th style="width:26%">ဟီရဂန</th>
+          <th style="width:40%">မြန်မာဘာသာ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="介護福祉職">介護福祉職</button></td>
+<td class="hiragana">かいごふくししょく</td>
+<td class="mm">စောင့်ရှောက်ရေးဝန်ထမ်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="アドボカシー">アドボカシー</button></td>
+<td class="hiragana">あどぼかしー</td>
+<td class="mm">အခွင့်အရေးကိုယ်စားပြုထောက်ခံပေးခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="視点">視点</button></td>
+<td class="hiragana">してん</td>
+<td class="mm">ရှုထောင့်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="対応">対応</button></td>
+<td class="hiragana">たいおう</td>
+<td class="mm">တုံ့ပြန်ဆောင်ရွက်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="適切">適切</button></td>
+<td class="hiragana">てきせつ</td>
+<td class="mm">သင့်တော်သော</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="説明">説明</button></td>
+<td class="hiragana">せつめい</td>
+<td class="mm">ရှင်းလင်းချက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="同意">同意</button></td>
+<td class="hiragana">どうい</td>
+<td class="mm">သဘောတူညီမှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="得る">得る</button></td>
+<td class="hiragana">える</td>
+<td class="mm">ရယူသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="介護計画">介護計画</button></td>
+<td class="hiragana">かいごけいかく</td>
+<td class="mm">စောင့်ရှောက်မှုအစီအစဉ်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="作成">作成</button></td>
+<td class="hiragana">さくせい</td>
+<td class="mm">ရေးဆွဲခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="他職種">他職種</button></td>
+<td class="hiragana">たしょくしゅ</td>
+<td class="mm">အခြားပညာရှင်အမျိုးအစားများ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="専門的">専門的</button></td>
+<td class="hiragana">せんもんてき</td>
+<td class="mm">ပညာရပ်ဆိုင်ရာ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="助言">助言</button></td>
+<td class="hiragana">じょげん</td>
+<td class="mm">အကြံပေးချက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="求める">求める</button></td>
+<td class="hiragana">もとめる</td>
+<td class="mm">တောင်းဆိုသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="趣味">趣味</button></td>
+<td class="hiragana">しゅみ</td>
+<td class="mm">ဝါသနာ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="生かす">生かす</button></td>
+<td class="hiragana">いかす</td>
+<td class="mm">အသုံးချသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="レクリエーション">レクリエーション</button></td>
+<td class="hiragana">れくりえーしょん</td>
+<td class="mm">အပန်းဖြေကစားလှုပ်ရှားမှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="活動">活動</button></td>
+<td class="hiragana">かつどう</td>
+<td class="mm">လှုပ်ရှားမှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="希望">希望</button></td>
+<td class="hiragana">きぼう</td>
+<td class="mm">ဆန္ဒ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="言い出しにくい">言い出しにくい</button></td>
+<td class="hiragana">いいだしにくい</td>
+<td class="mm">ပြောထုတ်ရန်ခက်ခဲသော</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="意思">意思</button></td>
+<td class="hiragana">いし</td>
+<td class="mm">အလိုဆန္ဒ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="くみ取る">くみ取る</button></td>
+<td class="hiragana">くみとる</td>
+<td class="mm">နားလည်ဖမ်းမိသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="実現">実現</button></td>
+<td class="hiragana">じつげん</td>
+<td class="mm">အကောင်အထည်ဖော်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="働きかける">働きかける</button></td>
+<td class="hiragana">はたらきかける</td>
+<td class="mm">အကောင်အထည်ဖော်ရန် တိုက်တွန်းလုပ်ဆောင်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="視覚障害">視覚障害</button></td>
+<td class="hiragana">しかくしょうがい</td>
+<td class="mm">မျက်မြင်ခက်ခဲမှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="必要">必要</button></td>
+<td class="hiragana">ひつよう</td>
+<td class="mm">လိုအပ်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="情報">情報</button></td>
+<td class="hiragana">じょうほう</td>
+<td class="mm">သတင်းအချက်အလက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="利用しやすい">利用しやすい</button></td>
+<td class="hiragana">りようしやすい</td>
+<td class="mm">အသုံးပြုရလွယ်ကူသော</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="脳梗塞">脳梗塞</button></td>
+<td class="hiragana">のうこうそく</td>
+<td class="mm">ဦးနှောက်သွေးကြောပိတ်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="後遺症">後遺症</button></td>
+<td class="hiragana">こういしょう</td>
+<td class="mm">နောက်ဆက်တွဲအကျိုးဆက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="左片麻痺">左片麻痺</button></td>
+<td class="hiragana">ひだりかたまひ</td>
+<td class="mm">ဘယ်ဘက်တစ်ဖက်ခြမ်းလေဖြတ်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="介護老人福祉施設">介護老人福祉施設</button></td>
+<td class="hiragana">かいごろうじんふくししせつ</td>
+<td class="mm">သက်ကြီးရွယ်အိုစောင့်ရှောက်ရေးနေရာ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="生活する">生活する</button></td>
+<td class="hiragana">せいかつする</td>
+<td class="mm">နေထိုင်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="家族">家族</button></td>
+<td class="hiragana">かぞく</td>
+<td class="mm">မိသားစု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="自分で">自分で</button></td>
+<td class="hiragana">じぶんで</td>
+<td class="mm">ကိုယ့်ဟာကိုယ်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="行う">行う</button></td>
+<td class="hiragana">おこなう</td>
+<td class="mm">လုပ်ဆောင်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="車いす">車いす</button></td>
+<td class="hiragana">くるまいす</td>
+<td class="mm">ဘီးတပ်ကုလားထိုင်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="自走する">自走する</button></td>
+<td class="hiragana">じそうする</td>
+<td class="mm">ကိုယ်တိုင်မောင်းနှင်သွားသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="日課">日課</button></td>
+<td class="hiragana">にっか</td>
+<td class="mm">နေ့စဉ်လုပ်ရိုးလုပ်စဉ်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="実習">実習</button></td>
+<td class="hiragana">じっしゅう</td>
+<td class="mm">လက်တွေ့လေ့ကျင့်ရေး</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="開始">開始</button></td>
+<td class="hiragana">かいし</td>
+<td class="mm">စတင်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="数日前">数日前</button></td>
+<td class="hiragana">すうじつまえ</td>
+<td class="mm">ရက်အနည်းငယ်မတိုင်မီ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="腕">腕</button></td>
+<td class="hiragana">うで</td>
+<td class="mm">လက်မောင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="痛い">痛い</button></td>
+<td class="hiragana">いたい</td>
+<td class="mm">နာကျင်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="依頼する">依頼する</button></td>
+<td class="hiragana">いらいする</td>
+<td class="mm">တောင်းဆိုသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="押す">押す</button></td>
+<td class="hiragana">おす</td>
+<td class="mm">တွန်းသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="悩む">悩む</button></td>
+<td class="hiragana">なやむ</td>
+<td class="mm">စိတ်ပူပန်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="実習生">実習生</button></td>
+<td class="hiragana">じっしゅうせい</td>
+<td class="mm">လက်တွေ့သင်တန်းကျောင်းသား</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="実習指導者">実習指導者</button></td>
+<td class="hiragana">じっしゅうしどうしゃ</td>
+<td class="mm">လက်တွေ့သင်တန်းညွှန်ကြားသူ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="相談する">相談する</button></td>
+<td class="hiragana">そうだんする</td>
+<td class="mm">တိုင်ပင်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="最初">最初</button></td>
+<td class="hiragana">さいしょ</td>
+<td class="mm">ပထမဆုံး</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="理由">理由</button></td>
+<td class="hiragana">りゆう</td>
+<td class="mm">အကြောင်းရင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="考える">考える</button></td>
+<td class="hiragana">かんがえる</td>
+<td class="mm">စဉ်းစားသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="大切">大切</button></td>
+<td class="hiragana">たいせつ</td>
+<td class="mm">အရေးကြီး</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="人間関係">人間関係</button></td>
+<td class="hiragana">にんげんかんけい</td>
+<td class="mm">လူမှုဆက်ဆံရေး</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="心理">心理</button></td>
+<td class="hiragana">しんり</td>
+<td class="mm">စိတ်ဗေဒ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="自己愛">自己愛</button></td>
+<td class="hiragana">じこあい</td>
+<td class="mm">ကိုယ်ကိုချစ်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="他人">他人</button></td>
+<td class="hiragana">たにん</td>
+<td class="mm">အခြားသူ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="区別">区別</button></td>
+<td class="hiragana">くべつ</td>
+<td class="mm">ခွဲခြားခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="意識する">意識する</button></td>
+<td class="hiragana">いしきする</td>
+<td class="mm">သတိထားသိမြင်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="自己同一性">自己同一性</button></td>
+<td class="hiragana">じこどういつせい</td>
+<td class="mm">ကိုယ်ပိုင်အမှတ်အသားတည်မြဲမှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="確立">確立</button></td>
+<td class="hiragana">かくりつ</td>
+<td class="mm">တည်ဆောက်ပြီးမြောက်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="認識">認識</button></td>
+<td class="hiragana">にんしき</td>
+<td class="mm">သဘောပေါက်သိမြင်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="自我">自我</button></td>
+<td class="hiragana">じが</td>
+<td class="mm">ကိုယ်တိုင်စိတ်သဘော</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="日常行動">日常行動</button></td>
+<td class="hiragana">にちじょうこうどう</td>
+<td class="mm">နေ့စဉ်အပြုအမူ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="影響">影響</button></td>
+<td class="hiragana">えいきょう</td>
+<td class="mm">သက်ရောက်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="表面化">表面化</button></td>
+<td class="hiragana">ひょうめんか</td>
+<td class="mm">မျက်နှာပြင်ပေါ်ထွက်လာခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="自己覚知">自己覚知</button></td>
+<td class="hiragana">じこかくち</td>
+<td class="mm">ကိုယ်ကိုယ်တိုင်သိမြင်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="コミュニケーション">コミュニケーション</button></td>
+<td class="hiragana">こみゅにけーしょん</td>
+<td class="mm">ဆက်သွယ်ပြောဆိုမှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="自己中心性">自己中心性</button></td>
+<td class="hiragana">じこちゅうしんせい</td>
+<td class="mm">ကိုယ်ပဲကိုယ်သဘောထား</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="行動">行動</button></td>
+<td class="hiragana">こうどう</td>
+<td class="mm">လုပ်ဆောင်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="コントロールする">コントロールする</button></td>
+<td class="hiragana">こんとろーるする</td>
+<td class="mm">ထိန်းချုပ်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="有料老人ホーム">有料老人ホーム</button></td>
+<td class="hiragana">ゆうりょうろうじんほーむ</td>
+<td class="mm">သက်ကြီးရွယ်အိုနေထိုင်ရာအဖိုးအခပေးဆောင်ရသောနေရာ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="入所する">入所する</button></td>
+<td class="hiragana">にゅうしょする</td>
+<td class="mm">ဝင်ရောက်နေထိုင်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="一人暮らし">一人暮らし</button></td>
+<td class="hiragana">ひとりぐらし</td>
+<td class="mm">တစ်ယောက်တည်းနေထိုင်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="当日">当日</button></td>
+<td class="hiragana">とうじつ</td>
+<td class="mm">နေ့တိုင်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="担当">担当</button></td>
+<td class="hiragana">たんとう</td>
+<td class="mm">တာဝန်ခံ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="戸惑う">戸惑う</button></td>
+<td class="hiragana">とまどう</td>
+<td class="mm">အံ့သြမိ/မသေချာဖြစ်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="様子">様子</button></td>
+<td class="hiragana">ようす</td>
+<td class="mm">အခြေအနေ/ပုံပန်းသဏ္ဌာန်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="一方的">一方的</button></td>
+<td class="hiragana">いっぽうてき</td>
+<td class="mm">တစ်ဖက်တည်းသော</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="あいづち">あいづち</button></td>
+<td class="hiragana">あいづち</td>
+<td class="mm">နားထောင်ကြောင်းပြသသံ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="発話">発話</button></td>
+<td class="hiragana">はつわ</td>
+<td class="mm">ပြောဆိုချက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="引き出す">引き出す</button></td>
+<td class="hiragana">ひきだす</td>
+<td class="mm">ထုတ်ဖော်လာအောင်လုပ်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="心がける">心がける</button></td>
+<td class="hiragana">こころがける</td>
+<td class="mm">စိတ်ထဲထားကာ ကြိုးစားသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="意図">意図</button></td>
+<td class="hiragana">いと</td>
+<td class="mm">ရည်ရွယ်ချက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="自己開示">自己開示</button></td>
+<td class="hiragana">じこかいじ</td>
+<td class="mm">ကိုယ့်ကိုယ်ပေါ်လွင်ပြောပြခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="評価">評価</button></td>
+<td class="hiragana">ひょうか</td>
+<td class="mm">အကဲဖြတ်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="感覚機能">感覚機能</button></td>
+<td class="hiragana">かんかくきのう</td>
+<td class="mm">အာရုံခံလုပ်ဆောင်ချက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="低下">低下</button></td>
+<td class="hiragana">ていか</td>
+<td class="mm">လျော့နည်းကျဆင်းခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="配慮">配慮</button></td>
+<td class="hiragana">はいりょ</td>
+<td class="mm">ဂရုပြုစဉ်းစားပေးခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="認知機能">認知機能</button></td>
+<td class="hiragana">にんちきのう</td>
+<td class="mm">သိမြင်စွမ်းရည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="改善">改善</button></td>
+<td class="hiragana">かいぜん</td>
+<td class="mm">တိုးတက်ကောင်းမွန်စေခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="双方向">双方向</button></td>
+<td class="hiragana">そうほうこう</td>
+<td class="mm">နှစ်ဖက်ပြန်လည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="キャリアパス">キャリアパス</button></td>
+<td class="hiragana">きゃりあぱす</td>
+<td class="mm">အလုပ်အကိုင်တိုးတက်လမ်းကြောင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="明確にする">明確にする</button></td>
+<td class="hiragana">めいかくにする</td>
+<td class="mm">ရှင်းလင်းသတ်မှတ်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="業務マニュアル">業務マニュアル</button></td>
+<td class="hiragana">ぎょうむまにゅある</td>
+<td class="mm">လုပ်ငန်းလက်စွဲ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="具体化する">具体化する</button></td>
+<td class="hiragana">ぐたいかする</td>
+<td class="mm">အသေးစိတ်အကောင်အထည်ဖော်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="利用サービス">利用サービス</button></td>
+<td class="hiragana">りようさーびす</td>
+<td class="mm">အသုံးပြုသည့်ဝန်ဆောင်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="関係書類">関係書類</button></td>
+<td class="hiragana">かんけいしょるい</td>
+<td class="mm">ဆက်စပ်စာရွက်စာတမ်းများ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="検討する">検討する</button></td>
+<td class="hiragana">けんとうする</td>
+<td class="mm">စဉ်းစားဆန်းစစ်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="設備基準">設備基準</button></td>
+<td class="hiragana">せつびきじゅん</td>
+<td class="mm">ပစ္စည်းအဆောက်အအုံစံနှုန်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="確認する">確認する</button></td>
+<td class="hiragana">かくにんする</td>
+<td class="mm">အတည်ပြုစစ်ဆေးသည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="能力">能力</button></td>
+<td class="hiragana">のうりょく</td>
+<td class="mm">စွမ်းရည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="経験">経験</button></td>
+<td class="hiragana">けいけん</td>
+<td class="mm">အတွေ့အကြုံ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="社会福祉法">社会福祉法</button></td>
+<td class="hiragana">しゃかいふくしほう</td>
+<td class="mm">လူမှုကူညီရေးဥပဒေ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="社会福祉法人">社会福祉法人</button></td>
+<td class="hiragana">しゃかいふくしほうじん</td>
+<td class="mm">လူမှုကူညီရေးအဖွဲ့အစည်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="収益事業">収益事業</button></td>
+<td class="hiragana">しゅうえきじぎょう</td>
+<td class="mm">ဝင်ငွေရလုပ်ငန်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="所轄庁">所轄庁</button></td>
+<td class="hiragana">しょかつちょう</td>
+<td class="mm">အုပ်ချုပ်ကြီးကြပ်ရေးအာဏာပိုင်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="設立">設立</button></td>
+<td class="hiragana">せつりつ</td>
+<td class="mm">တည်ထောင်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="認可">認可</button></td>
+<td class="hiragana">にんか</td>
+<td class="mm">ခွင့်ပြုချက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="評議員会">評議員会</button></td>
+<td class="hiragana">ひょうぎいんかい</td>
+<td class="mm">အကြံပေးအဖွဲ့အစည်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="解散">解散</button></td>
+<td class="hiragana">かいさん</td>
+<td class="mm">ဖျက်သိမ်းခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="定期巡回">定期巡回</button></td>
+<td class="hiragana">ていきじゅんかい</td>
+<td class="mm">အချိန်မှန်လှည့်လည်သွားရောက်စောင့်ရှောက်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="随時対応">随時対応</button></td>
+<td class="hiragana">ずいじたいおう</td>
+<td class="mm">လိုအပ်သလိုချက်ချင်းတုံ့ပြန်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="訪問介護看護">訪問介護看護</button></td>
+<td class="hiragana">ほうもんかいごかんご</td>
+<td class="mm">အိမ်သို့သွားရောက်စောင့်ရှောက်ခြင်းနှင့်သူနာပြုဝန်ဆောင်မှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="利用定員">利用定員</button></td>
+<td class="hiragana">りようていいん</td>
+<td class="mm">အသုံးပြုသူအရေအတွက်ကန့်သတ်ချက်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="日中">日中</button></td>
+<td class="hiragana">にっちゅう</td>
+<td class="mm">နေ့အချိန်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="夜間">夜間</button></td>
+<td class="hiragana">やかん</td>
+<td class="mm">ညအချိန်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="提供する">提供する</button></td>
+<td class="hiragana">ていきょうする</td>
+<td class="mm">ပေးအပ်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="認知症">認知症</button></td>
+<td class="hiragana">にんちしょう</td>
+<td class="mm">မှတ်ဉာဏ်ချို့ယွင်းမှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="機能訓練">機能訓練</button></td>
+<td class="hiragana">きのうくんれん</td>
+<td class="mm">လုပ်ဆောင်နိုင်စွမ်းလေ့ကျင့်ခန်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="都道府県">都道府県</button></td>
+<td class="hiragana">とどうふけん</td>
+<td class="mm">ပြည်နယ်အုပ်ချုပ်ရေးအဆင့်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="事業者">事業者</button></td>
+<td class="hiragana">じぎょうしゃ</td>
+<td class="mm">ဝန်ဆောင်မှုပေးသူ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="指定">指定</button></td>
+<td class="hiragana">してい</td>
+<td class="mm">သတ်မှတ်အမည်ပေးခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="指導">指導</button></td>
+<td class="hiragana">しどう</td>
+<td class="mm">လမ်းညွှန်ကြီးကြပ်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="監督">監督</button></td>
+<td class="hiragana">かんとく</td>
+<td class="mm">စောင့်ကြည့်ကြီးကြပ်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="うつ症状">うつ症状</button></td>
+<td class="hiragana">うつしょうじょう</td>
+<td class="mm">စိတ်ကျရောဂါလက္ခဏာများ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="体調不良">体調不良</button></td>
+<td class="hiragana">たいちょうふりょう</td>
+<td class="mm">ကိုယ်လက်မအင်အားမကောင်းခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="退職">退職</button></td>
+<td class="hiragana">たいしょく</td>
+<td class="mm">အလုပ်ထွက်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="回復する">回復する</button></td>
+<td class="hiragana">かいふくする</td>
+<td class="mm">ပြန်လည်ကောင်းမွန်သည်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="再就職">再就職</button></td>
+<td class="hiragana">さいしゅうしょく</td>
+<td class="mm">ပြန်လည်အလုပ်ဝင်ခြင်း</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="貯金">貯金</button></td>
+<td class="hiragana">ちょきん</td>
+<td class="mm">စုဆောင်းငွေ</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="生活保護">生活保護</button></td>
+<td class="hiragana">せいかつほご</td>
+<td class="mm">အခြေခံဘဝကာကွယ်စောင့်ရှောက်ပံ့ပိုးမှု</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="生存権">生存権</button></td>
+<td class="hiragana">せいぞんけん</td>
+<td class="mm">အသက်ရှင်နေထိုင်ခွင့်</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="保健所">保健所</button></td>
+<td class="hiragana">ほけんじょ</td>
+<td class="mm">ပြည်သူ့ကျန်းမာရေးရုံး</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="精神保健">精神保健</button></td>
+<td class="hiragana">せいしんほけん</td>
+<td class="mm">စိတ်ကျန်းမာရေး</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="児童">児童</button></td>
+<td class="hiragana">じどう</td>
+<td class="mm">ကလေး</td>
+</tr>
+<tr>
+<td class="jp"><button class="jpbtn" type="button" data-tts="一時保護">一時保護</button></td>
+<td class="hiragana">いちじほご</td>
+<td class="mm">ယာယီကာကွယ်စောင့်ရှောက်ခြင်း</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function(){
+  const input = document.getElementById('q');
+  const clearBtn = document.getElementById('clear');
+  const table = document.getElementById('tbl');
+  const rows = Array.from(table.querySelectorAll('tbody tr'));
+  const countEl = document.getElementById('count');
+  const player = document.getElementById('player');
+
+  function ttsUrl(text){
+    const base = 'https://translate.google.com/translate_tts';
+    const params = new URLSearchParams({
+      ie: 'UTF-8',
+      tl: 'ja',
+      client: 'tw-ob',
+      q: text
+    });
+    return base + '?' + params.toString();
+  }
+
+  function normalize(s){ return (s || '').toLowerCase().trim(); }
+
+  function applyFilter(){
+    const q = normalize(input.value);
+    let shown = 0;
+    rows.forEach(r => {
+      const jp = r.children[0].innerText || '';
+      const hi = r.children[1].innerText || '';
+      const mm = r.children[2].innerText || '';
+      const hay = normalize(jp + ' ' + hi + ' ' + mm);
+      const ok = !q || hay.includes(q);
+      r.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    countEl.textContent = `ပြထားသည်: ${shown} / ${rows.length}`;
+  }
+
+  table.addEventListener('click', (e) => {
+    const btn = e.target.closest('.jpbtn');
+    if(!btn) return;
+    const text = btn.getAttribute('data-tts') || btn.innerText || '';
+    player.src = ttsUrl(text);
+    player.play().catch(()=>{});
+  });
+
+  input.addEventListener('input', applyFilter);
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    applyFilter();
+    input.focus();
+  });
+
+  applyFilter();
+})();
+</script>
+</body>
+</html>
